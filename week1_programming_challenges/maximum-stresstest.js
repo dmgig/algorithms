@@ -100,58 +100,57 @@ const fastMaximum_1pt5n = (args) => { // week 1 2.5 example 1.5n speed
 // https://cs.stackexchange.com/questions/83022/find-largest-and-second-largest-elements-of-the-array
 const fastMaximum_recu = (args) => { // week 1 2.5 example recursive
   let compCnt = 0
-
   let argsCp = args.slice(0)
   if(argsCp.length % 2 !== 0)
     argsCp.push(0)
-  console.log('args', argsCp)
 
-  if(argsCp.length === 2){
-    if(argsCp[0] > argsCp[1])
-      return [0, 1]
-    else
-      return [1, 0]
-  }
+  console.log('')
+  console.log('ARGS')
+  console.log(argsCp)
 
   let maxes = [],
       swaps = []
 
-  for(i = 0; i < argsCp.length; i=i+2){
-    console.log(i)
-    compCnt++
-    // swap larger element into first position of pair
-    // set swaps[i] to 1 if pair was swapped, else 0
-    // move larger element into maxes
-    if (argsCp[i] > argsCp[i+1]) {
-      let tmp = argsCp[i]
-      argsCp[i] = argsCp[i+1]
-      argsCp[i+1] = tmp
+  for(i = 0; i < argsCp.length/2; i++){
+    if (argsCp[2*i] > argsCp[2*i+1]) {
+      temp = argsCp[2*i]
+      argsCp[2*i] = argsCp[2*i+1]
+      argsCp[2*i+1] = temp
       swaps.push(1)
     } else {
       swaps.push(0)
     }
-    maxes.push(argsCp[i+1])
+    maxes.push(argsCp[2*i+1])
   }
-  console.log('maxes', maxes)
-  console.log('swaps', swaps)
 
-  let [j, k] = fastMaximum_recu(maxes)
-  console.log('[j, k]', [j, k])
-  let swap_j = swaps[j]
-  let swap_k = swaps[k]
-  // j = 2*j - 1
-  // k = 2*k - 1
-  if(maxes[j] > maxes[k]){
-    k = j
-    swap_k = 0 - swap_j
+  if(argsCp.length === 4) {
+
   }
-  return [j + swap_j, k + swap_k]
+
+  console.log('s', swaps)
+  console.log(maxes)
+
+  if(argsCp.length === 2) return [0, 1]
+
+  // j returns the higher number
+  let [k, j] = fastMaximum_recu(maxes)
+
+  // map back from maxes to argsCp
+  k_swap = swaps[k]
+  j_swap = swaps[j]
+  k = 2 * k + 1 - swaps[k]
+  j = 2 * j + 1 - swaps[j]
+  if(argsCp[k] < argsCp[j - 1]){
+    k = j - 1
+  }
+  return [k, j]
 }
 
 const fastMaximum_recuRun = (args) => {
-  [L, S] = fastMaximum_recu(args)
+  // args = [4,1,5,2,9,7,19,10]
+  let [L, S] = fastMaximum_recu(args)
   const result = parseInt(args[L]) * parseInt(args[S])
-  console.log(args, L, S)
+  console.log([L, S])
   return result
 }
 
