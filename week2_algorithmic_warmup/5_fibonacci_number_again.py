@@ -9,11 +9,15 @@ def fibonacci_number_again(n, m):
 
 def get_pisano_period(m):
     A, B, i = [], [], 0
+    if(m < 2):
+        return False
     while 1:
         f = (fibonacci_number_fast(i) % m) % 10
         A.append(f)
         if i > 0:
             B.append(f)
+        print(A)
+        print(B)
         if A[0:len(B)] != B:
             B = []
         if len(A) / 2 == len(B):
@@ -42,4 +46,10 @@ def fibonacci_number_fast(n):
 if __name__ == '__main__':
     input = sys.stdin.read();
     n, m = map(int, input.split())
-    print(fibonacci_number_again(n, m))
+    i = 0
+print(get_pisano_period(11))
+    # while 1:
+    #     print("================== %i" % i)
+    #     print(get_pisano_period(i))
+    #     i = i + 1
+    # print(fibonacci_number_again(n, m))
