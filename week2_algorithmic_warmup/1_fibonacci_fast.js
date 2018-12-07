@@ -1,4 +1,7 @@
 const fibonacci_number_fast = function(n) {
+  n = parseInt(n)
+  if(n === 0) return 0
+  if(n === 1) return 1
   const store = [0,1];
   for(i=1; i<n; i++){
     store.push(store[i-1] + store[i])

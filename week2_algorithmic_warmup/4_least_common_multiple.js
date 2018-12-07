@@ -22,7 +22,7 @@ process.stdin.on('end', function () {
 
   const least_common_multiple_fast = function(a,b) {
     const gcd = greatest_common_divisor_fast(a,b);
-    return a*b/gcd
+    return (a*b)/gcd
   }
 
   const greatest_common_divisor_fast = function(a,b) {
