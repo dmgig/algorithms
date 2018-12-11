@@ -1,37 +1,22 @@
 # Uses python3
 import sys
+import math
 import random
 
 def fibonacci_number_again(n, m):
-    print(get_pisano_period(m))
     fnum = n % get_pisano_period(m)
-    return fibonacci_number_fast(fnum)
+    return fibonacci_number_fast(fnum) % m
 
 def get_pisano_period(m):
-    A, B, i = [], [], 0
-    if(m < 2):
-        return False
-    while 1:
-        f = (fibonacci_number_fast(i) % m) % 10
-        A.append(f)
-        if i > 0:
-            B.append(f)
-        print(A)
-        print(B)
-        if A[0:len(B)] != B:
-            B = []
-        if len(A) / 2 == len(B):
-            return int(len(B))
-        i = i + 1
-
-# def fibonacci_number_again(n, m):
-#     # n = (n % 61)
-#     # # sum = 0
-#     for i in range(0, n+1):
-#         fibo = fibonacci_number_fast(i % 60)
-#         # fibo = fibo % 10
-#         print(fibo % m)
-#     # return fibonacci_number_fast(n) % m
+    a = 0
+    b = 1
+    c = a + b;
+    for i in range(0, m * m):
+        c = (a + b) % m
+        a = b
+        b = c
+        if a == 0 and b == 1:
+            return i + 1;
 
 def fibonacci_number_fast(n):
     if n == 0:
@@ -46,10 +31,5 @@ def fibonacci_number_fast(n):
 if __name__ == '__main__':
     input = sys.stdin.read();
     n, m = map(int, input.split())
-    i = 0
-print(get_pisano_period(11))
-    # while 1:
-    #     print("================== %i" % i)
-    #     print(get_pisano_period(i))
-    #     i = i + 1
-    # print(fibonacci_number_again(n, m))
+    # print(get_pisano_period(m))
+    print(fibonacci_number_again(n, m))
