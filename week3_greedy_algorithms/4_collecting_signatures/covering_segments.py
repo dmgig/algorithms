@@ -20,6 +20,7 @@ def optimal_points(segments):
 
     while sortedSegments:
 
+        currentSegmentPoints = []
         overlappingSegments = []
         overlappingSegmentsTracker = []
         # check all segments against segment 0 for overlap
@@ -40,17 +41,14 @@ def optimal_points(segments):
 
         # if no overlapping segments
         if len(overlappingSegments) > 0:
-            possiblityA = sortedSegments[0][1]
+            for k in sorted(overlappingSegmentsTracker, reverse=True):
+                del sortedSegments[k]
             del sortedSegments[0]
-            # append first point
-            possiblityB = sortedSegments[0][1]
-            points.append(min(possiblityA, possiblityB))
-            for k in overlappingSegmentsTracker:
-                del sortedSegments[k-1]
-            points = points + optimal_points(sortedSegments)
+            currentSegmentPoints = optimal_points(overlappingSegments)
+            points = points + currentSegmentPoints
             return points
         else:
-            points.append(sortedSegments[0][1])
+            points.append(sortedSegments[0][0])
             del sortedSegments[0]
     return points
 
